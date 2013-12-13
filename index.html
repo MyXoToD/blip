@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Blip</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width = device-width, initial-scale = 1.0, user-scalable = no">
+
+    <link rel="stylesheet" href="assets/stylesheets/application.css" type="text/css" />
+
+    <script type="text/javascript" src="assets/javascripts/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="assets/javascripts/application.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <section class="home">
+        <h1><span>B</span><span>l</span><span>i</span><span>p</span></h1>
+        <nav>
+          <a href="#" class="btn-switch-section btn-play" data-section="play">Play</a>
+          <a href="#" class="btn-switch-section" data-section="scores">Scores</a>
+          <a href="#" class="btn-install">Install</a>
+        </nav>
+      </section>
+
+      <section class="play">
+        <div class="score">
+          000000
+        </div>
+        <div class="game">
+          <div class="time">
+            <div class="time-top"></div>
+            <div class="time-right"></div>
+            <div class="time-bottom"></div>
+            <div class="time-left"></div>
+          </div>
+          <div class="grid">
+
+          </div>
+        </div>
+      </section>
+
+      <section class="gameover">
+        <div class="score">
+          000000
+        </div>
+
+        <nav>
+          <a class="btn-switch-section btn-play" data-section="play">Again</a>
+        </nav>
+      </section>
+
+      <section class="scores">
+
+      </section>
+    </div>
+  </body>
+</html>

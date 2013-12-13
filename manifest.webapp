@@ -1,0 +1,26 @@
+{
+  "version": "0.1",
+  "name": "Blip",
+  "description": "Blip is a minimalist Whack-A-Mole game.",
+  "launch_path": "/",
+  "orientation": ["portrait","landscape-secondary"],
+  "fullscreen": "true",
+  "icons": {
+    "30": "/assets/images/icon-30.png",
+    "60": "/assets/images/icon-60.png",
+    "128": "/assets/images/icon-128.png"
+  },
+  "developer": {
+    "name": "Max Boll",
+    "url": "http://myxotod.com"
+  },
+  "locales": {
+    "de": {
+      "description": "Blip ist ein minimalistisches Whack-A-Mole Spiel.",
+      "developer": {
+        "url": "http://myxotod.de"
+      }
+    }
+  },
+  "default_locale": "en"
+}
