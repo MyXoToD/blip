@@ -6,7 +6,7 @@ var App = {
   current_section: "home",
   section_speed: 200,
   app_url: "http://app.myxotod.de/manifest.webapp",
-  dots_per_row: 2,
+  dots_per_row: 6,
   colors: {
     1: {
       color: "#d4d14b",
