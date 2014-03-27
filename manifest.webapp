@@ -3,7 +3,7 @@
   "name": "Blip",
   "description": "Blip is a minimalist Whack-A-Mole game.",
   "launch_path": "/",
-  "orientation": ["portrait","landscape-secondary"],
+  "orientation": ["portrait-primary"],
   "fullscreen": "true",
   "icons": {
     "30": "/assets/images/icon-30.png",
