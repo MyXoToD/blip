@@ -5,7 +5,7 @@ $(document).ready(function() {
 var App = {
   current_section: "home",
   section_speed: 200,
-  app_url: "http://app.myxotod.de/manifest.webapp",
+  app_url: "http://blip.myxotod.com/manifest.webapp",
   dots_per_row: 6,
   colors: {
     1: {
