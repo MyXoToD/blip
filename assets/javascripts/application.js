@@ -54,8 +54,9 @@ var App = {
       .css("left", "0%")
       .css("display", "block");
 
-    this.colorize_headline();
-
+    this.colorize_headlines();
+    $("section.home nav .btn-play").css("color", object_random(this.colors)["color"]); // Colorize Play Button
+    //console.log(this.is_installed());
     if (this.is_installed() == true) {
       $("section.home .btn-install").hide();
     }
@@ -71,6 +72,11 @@ var App = {
       $("section.home h1").css("z-index", "1");
       $("section.home nav button").css("z-index", "1");
       $("section.play .time").css("z-index", "1");
+
+      // Orientation
+      if ($(window).width() > $(window).height()) {
+        alert("Please play Blip in portrait mode. Otherwise it could be possible, that it doesn't work as expected.");
+      }
     });
 
     $(document).on("click", ".btn-install", function(e) {
@@ -81,7 +87,7 @@ var App = {
     $(document).on("click tap", ".dot.active", function(e) {
       App.add_point();
       e.preventDefault();
-    })
+    });
   },
 
   switch_section: function(section) {
@@ -101,15 +107,28 @@ var App = {
       case "play":
         this.prepare_game();
       break;
+      case "scores":
+        $(".top10").html("");
+        for (var i=1;i<=10;i++) {
+          var key = "rank" + i.toString();
+          var value = localStorage.getItem(key);
+          if (value != "null") {
+            $(".top10").append("<div>"+i+". "+value+" Points</div>");
+          }
+        }
+        $(".top10 div").each(function() {
+          $(this).css("color", object_random(App.colors)["color"]); // Colorize scores
+        });
+        var count = $(".top10 div").length;
+        $(".top10").css("height", $(".top10 div").height() * count + "px");
+      break;
     }
   },
 
-  colorize_headline: function() {
-    $("section.home h1 span:nth-child(1)").css("color", object_random(this.colors)["color"]);
-    $("section.home h1 span:nth-child(2)").css("color", object_random(this.colors)["color"]);
-    $("section.home h1 span:nth-child(3)").css("color", object_random(this.colors)["color"]);
-    $("section.home h1 span:nth-child(4)").css("color", object_random(this.colors)["color"]);
-    $("section.home nav .btn-play").css("color", object_random(this.colors)["color"]);
+  colorize_headlines: function() {
+    $("h1 span").each(function() {
+      $(this).css("color", object_random(App.colors)["color"]);
+    });
   },
 
   is_installed: function() {
@@ -228,17 +247,55 @@ var App = {
     audioElement.setAttribute('type', 'audio/mp3');
     audioElement.setAttribute('autoplay', 'autoplay');
 
-    //$.get();
-
     audioElement.addEventListener("load", function() {
       audioElement.play();
     }, true);
   },
 
+  save_score: function(score) {
+    // Get score position
+    var recent = "";
+    var done = false;
+    ranking:
+    for (var i=1;i<=10;i++) {
+      var key = "rank" + i.toString();
+      var value = localStorage.getItem(key);
+      if (!done) {
+        if (value == "null") {
+          localStorage.setItem(key, score);
+          break ranking;
+        } else {
+          if (score > value) {
+            recent = value;
+            localStorage.setItem(key, score);
+            done = true;
+          }
+        }
+      } else {
+        localStorage.setItem(key, recent);
+        recent = value;
+      }
+    }
+  },
+
+  get_time: function() {
+    var now = new Date();
+    var year = now.getFullYear();
+    var month = now.getMonth();
+    if (month.toString().length == 1) {
+      month = "0" + month;
+    }
+    var day = now.getDate();
+    if (day.toString().length == 1) {
+      day = "0" + day;
+    }
+    return year + "/" + month + "/" + day;
+  },
+
   end_game: function() {
     clearInterval(this.time_interval);
     var rand_color = object_random(this.colors)["color"];
-
+    this.save_score(this.score);
     $("section.gameover .score").html($("section.play .score").html());
     $("section.gameover .score span").css("color", rand_color);
     $("section.gameover .btn-play").css("color", rand_color);
