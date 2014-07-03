@@ -1,5 +1,5 @@
 {
-  "version": "0.2",
+  "version": "0.3",
   "name": "Blip",
   "description": "Blip is a minimalist Whack-A-Mole game. Colored squares will pop up at random positions and you need to tap them as quickly as possible. You have 30 seconds. Try to beat your own highscore! Good luck!",
   "launch_path": "/index.html",
