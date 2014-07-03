@@ -8,5 +8,5 @@ Of course you can install the beta if you want. You'll need a phone with firefox
 
 All you need to do is:
 
-1. Go to [http://app.myxotod.de](http://app.myxotod.de)
-2. Play directly inside your browser or (if you're on an firefox os device) click on "install" to save it on your local storage.
+1. Go to [http://blip.myxotod.com](http://blip.myxotod.com)
+2. Play directly inside your browser or (if you're on an firefox os device) install it from the Firefox Marketplace.
