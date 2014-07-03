@@ -73,7 +73,7 @@ var App = {
       $("section.home nav button").css("z-index", "1");
       $("section.play .time").css("z-index", "1");
 
-      // Orientation
+      // Check Orientation
       if ($(window).width() > $(window).height()) {
         alert("Please play Blip in portrait mode. Otherwise it could be possible, that it doesn't work as expected.");
       }
@@ -112,7 +112,7 @@ var App = {
         for (var i=1;i<=10;i++) {
           var key = "rank" + i.toString();
           var value = localStorage.getItem(key);
-          if (value != "null") {
+          if (value != "null" && value != null) {
             $(".top10").append("<div>"+i+". "+value+" Points</div>");
           }
         }
@@ -295,6 +295,15 @@ var App = {
   end_game: function() {
     clearInterval(this.time_interval);
     var rand_color = object_random(this.colors)["color"];
+
+    // Check if new highscore
+    var highscore = localStorage.getItem("rank1");
+    $(".new-highscore").hide();
+    if (highscore != "null" && highscore != null && App.score > highscore) {
+      $(".new-highscore").css("color", object_random(App.colors)["color"]);
+      $(".new-highscore").show();
+    }
+
     this.save_score(this.score);
     $("section.gameover .score").html($("section.play .score").html());
     $("section.gameover .score span").css("color", rand_color);

@@ -1,7 +1,7 @@
 {
   "version": "0.2",
   "name": "Blip",
-  "description": "Blip is a minimalist Whack-A-Mole game.",
+  "description": "Blip is a minimalist Whack-A-Mole game. Colored squares will pop up at random positions and you need to tap them as quickly as possible. You have 30 seconds. Try to beat your own highscore! Good luck!",
   "launch_path": "/index.html",
   "orientation": ["portrait-primary"],
   "fullscreen": "true",
@@ -16,7 +16,7 @@
   },
   "locales": {
     "de": {
-      "description": "Blip ist ein minimalistisches Whack-A-Mole Spiel.",
+      "description": "Blip ist ein minimalistisches Whack-A-Mole Spiel. Farbige Quadrate poppen an zufälligen Positionen auf und du musst diese so schnell es geht antippen. Du hast 30 Sekunden Zeit. Versuche deinen eigenen Highscore zu überbieten! Viel Glück!",
       "developer": {
         "url": "http://opoloo.de"
       }
