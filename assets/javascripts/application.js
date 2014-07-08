@@ -46,9 +46,15 @@ var App = {
   time_max: 30,
   time_left: 0,
   score: 0,
+  settings: {
+    sound: "true",
+    vibration: "true"
+  },
 
   initialize: function() {
     this.bind_events();
+
+    this.use_local_settings();
     
     $("section.home")
       .css("left", "0%")
@@ -79,7 +85,7 @@ var App = {
       }
     });
 
-    $(document).on("click", ".btn-install", function(e) {
+    $(document).on("click tap", ".btn-install", function(e) {
       App.install();
       e.preventDefault();
     });
@@ -88,6 +94,49 @@ var App = {
       App.add_point();
       e.preventDefault();
     });
+
+    $(document).on("click tap", ".btn-toggle-settings", function(e) {
+      App.toggle_settings($(this).data("setting"));
+      e.preventDefault();
+    });
+  },
+
+  use_local_settings: function() {
+    var local_sound = localStorage.getItem("setting-sound");
+    if (local_sound != "null" && local_sound != null) {
+      this.settings.sound = local_sound;
+    } else {
+      if (this.settings.sound == "true") {
+        localStorage.setItem("setting-sound", "true");
+      } else {
+        localStorage.setItem("setting-sound", "false");
+      }
+      if (this.settings.vibration == "true") {
+        localStorage.setItem("setting-vibration", "true");
+      } else {
+        localStorage.setItem("setting-vibration", "false");
+      }
+    }
+    var local_vibration = localStorage.getItem("setting-vibration");
+    if (local_vibration != "null" && local_vibration != null) {
+      this.settings.vibration = local_vibration;
+    }
+  },
+
+  toggle_settings: function(setting) {
+    var key = "setting-"+setting;
+    var value = localStorage.getItem(key);
+    if (value != "null" && value != null) {
+      if (value == "true") {
+        localStorage.setItem(key, "false");
+        $("."+setting+"-state").html("Off");
+        this.settings[setting] = "false";
+      } else {
+        localStorage.setItem(key, "true");
+        $("."+setting+"-state").html("On");
+        this.settings[setting] = "true";
+      }
+    }
   },
 
   switch_section: function(section) {
@@ -121,6 +170,18 @@ var App = {
         });
         var count = $(".top10 div").length;
         $(".top10").css("height", $(".top10 div").height() * count + "px");
+      break;
+      case "settings":
+        if (this.settings.sound == "true") {
+          $(".sound-state").html("On");
+        } else {
+          $(".sound-state").html("Off");
+        }
+        if (this.settings.vibration == "true") {
+          $(".vibration-state").html("On");
+        } else {
+          $(".vibration-state").html("Off");
+        }
       break;
     }
   },
@@ -242,14 +303,16 @@ var App = {
   },
 
   play_sound: function(sound) {
-    var audioElement = document.createElement('audio');
-    audioElement.setAttribute('src', 'assets/sounds/' + sound + '.mp3');
-    audioElement.setAttribute('type', 'audio/mp3');
-    audioElement.setAttribute('autoplay', 'autoplay');
+    if (this.settings.sound == "true") {
+      var audioElement = document.createElement('audio');
+      audioElement.setAttribute('src', 'assets/sounds/' + sound + '.mp3');
+      audioElement.setAttribute('type', 'audio/mp3');
+      audioElement.setAttribute('autoplay', 'autoplay');
 
-    audioElement.addEventListener("load", function() {
-      audioElement.play();
-    }, true);
+      audioElement.addEventListener("load", function() {
+        audioElement.play();
+      }, true);
+    }
   },
 
   save_score: function(score) {
@@ -299,7 +362,12 @@ var App = {
     // Check if new highscore
     var highscore = localStorage.getItem("rank1");
     $(".new-highscore").hide();
-    if (highscore != "null" && highscore != null && App.score > highscore) {
+    if (highscore != "null" && highscore !== null && highscore !== NaN && highscore != "NaN") {
+      if (App.score > highscore) {
+        $(".new-highscore").css("color", object_random(App.colors)["color"]);
+        $(".new-highscore").show();
+      }
+    } else {
       $(".new-highscore").css("color", object_random(App.colors)["color"]);
       $(".new-highscore").show();
     }
@@ -313,8 +381,10 @@ var App = {
   },
 
   vibrate: function(ms) {
-    if('vibrate' in navigator) {
-      navigator.vibrate(ms);
+    if (this.settings.vibration == "true") {
+      if('vibrate' in navigator) {
+        navigator.vibrate(ms);
+      }
     }
   }
 };
